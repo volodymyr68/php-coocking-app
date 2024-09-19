@@ -13,7 +13,7 @@ select sum(rating) from practice where practice_id = 1888;
 # 7. Підрахувати кількість записів у таблиці organizations
 select count(id) from organizations;
 # 8. Необхідно вивести 10 новин з таблиці news, відсортувати за датою додавання created_at
-select * from news order by created_at limit 10;
+select * from news order by created_at desc limit 10;
 # 9. Необхідно вибрати номер телефону (phones) та ім'я (name) з таблиці директорів directors, у яких назва організації (organization) починається зі слова «ВНЗ»
 select phones, name from directors where organization like 'ВНЗ%';
 # 10. Вивести surname з таблиці студентів students, які народилися в 1995 році (поле birthday має формат DATE)
@@ -24,7 +24,7 @@ select publish_date, body from publishes order by id ASC limit 5;
 select g.name from genres g left join education.books b on g.id = b.genre_id where b.id is null;
 # 13. Вибрати прізвище surname користувача та ім'я name з таблиці users та відповідну назву регіону (поле name) із таблиці areas.
 # Зв'язок: users.area_id = areas.id, відсортувати за назвою регіону. Вибрати всього 4 записи
-select full_name, name , areas.id from users left join areas on users.areas_id = areas.id where users.areas_id is not null order by areas.name desc limit 4
+select full_name, name from users left join areas on users.areas_id = areas.id where users.areas_id is not null order by areas.name desc limit 4;
 # 14. Необхідно порахувати скільки новин у кожній категорії
 select c.name as category_name, COUNT(n.id) as news_count from categories c left join news n on c.id = n.category_id group by c.id;
 # 15. Вибрати назву міста (name) із таблиці cities та відповідну назву регіону (name) із таблиці areas. Зв'язок: cities.area_id = areas.id
