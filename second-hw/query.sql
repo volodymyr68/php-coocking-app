@@ -3,7 +3,7 @@ select full_name from users where email like '%gmail.com';
 # 2. Необхідно вибрати номер сертифіката (number), власника сертифіката (fio) із таблиці сертифікатів (certificates), де не вказано рік випуску year ( за замовчуванням поле year має значення NULL)
 select number , fio from certificates where year is NULL;
 # 3. Оновити таблицю certificates, встановити такі значення: у полі series встановити значення ВН, у полі number – 25444, де user_id = 7
-UPDATE certificates SET series = 'ВН', number = 25444 WHERE user_id = 7;
+update certificates set series = 'ВН', number = 25444 where user_id = 7;
 # 4. Видалити останні 5 записів з таблиці users
 delete from users order by id desc limit 5;
 # 5. Знайти мінімальне значення з поля count_students у таблиці організацій, де type_id = 5
