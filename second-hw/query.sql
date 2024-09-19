@@ -26,8 +26,8 @@ select g.name from genres g left join education.books b on g.id = b.genre_id whe
 # Зв'язок: users.area_id = areas.id, відсортувати за назвою регіону. Вибрати всього 4 записи
 select full_name, name , areas.id from users left join areas on users.areas_id = areas.id where users.areas_id is not null order by areas.name desc limit 4
 # 14. Необхідно порахувати скільки новин у кожній категорії
-SELECT c.name AS category_name, COUNT(n.id) AS news_count FROM categories c LEFT JOIN news n ON c.id = n.category_id GROUP BY c.id;
+select c.name as category_name, COUNT(n.id) as news_count from categories c left join news n on c.id = n.category_id group by c.id;
 # 15. Вибрати назву міста (name) із таблиці cities та відповідну назву регіону (name) із таблиці areas. Зв'язок: cities.area_id = areas.id
-SELECT cities.name AS city_name, areas.name AS area_name FROM cities JOIN areas ON cities.area_id = areas.id;
+select cities.name as city_name, areas.name as area_name from cities join areas on cities.area_id = areas.id;
 # 16. Вибрати назву школи (name) з таблиці schools та відповідну назву регіону (name) з таблиці districts. Зв'язок: schools.district_id = districts.id
-SELECT schools.name AS school_name, districts.name AS district_name FROM schools JOIN districts ON schools.district_id = districts.id;
+select schools.name as school_name, districts.name as district_name from schools join districts on schools.district_id = districts.id;
