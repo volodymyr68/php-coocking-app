@@ -1,12 +1,5 @@
 <?php
-    require __DIR__ . '/vendor/autoload.php';
-    session_start();
-
-    // Перевірка, чи користувач вже авторизований
-    if(isset($_SESSION['user_id'])) {
-        header("Location: scripts/dashboard.php");
-        exit();
-    }
+require ("./scripts/second-hw/main.php")
 ?>
 <!doctype html>
 <html lang="en">
@@ -36,29 +29,8 @@
         }
     </style>
 
-
-    <!-- Custom styles for this template -->
-    <link href="css/form-validation.css" rel="stylesheet">
 </head>
 <body>
-<h2>Вхід</h2>
 
-<?php
-// Вивід помилок
-if(isset($_SESSION['error'])) {
-    $error = $_SESSION['error'];
-    echo "<p style='color:red;'>$error</p>";
-}
-?>
-
-<form method="POST" action="scripts/main.php">
-    <label for="username">Логін:</label>
-    <input type="text" id="username" name="username" required><br>
-
-    <label for="password">Пароль:</label>
-    <input type="password" id="password" name="password" required><br>
-
-    <input type="submit" value="Увійти">
-</form>
 </body>
 </html>
