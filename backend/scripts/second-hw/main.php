@@ -16,7 +16,7 @@ function reverseString(string $str): string
     return strrev($str);
 }
 
-echo reverseString("Hello, World!");
+echo reverseString('Hello, World!');
 echo "<br>";
 //Створіть функцію, яка приймає масив чисел і повертає новий масив, в якому всі елементи збільшені на 10.
 function multiplyArray(array $array): array
@@ -34,7 +34,7 @@ echo "<br>";
 function countVowels(string $str): int
 {
     $str = strtolower($str);
-    define("vowels", ['a', 'e', 'i', 'o', 'u']);
+    define('vowels', ['a', 'e', 'i', 'o', 'u']);
     $count = 0;
     for ($i = 0; $i < strlen($str); $i++) {
         if (in_array($str[$i], vowels)) {
@@ -45,7 +45,7 @@ function countVowels(string $str): int
     return $count;
 }
 
-echo countVowels("Hello, World!");
+echo countVowels('Hello, World!');
 echo "<br>";
 //Створіть функцію для видалення дублікатів з масиву.
 function removeDuplicates(array $data): array
@@ -60,10 +60,10 @@ echo "<br>";
 function isPalindrome(string $str): bool
 {
     $str = strtolower(str_replace(' ', '', $str));
-    return $str === strrev($str) ? "true" : "false";
+    return $str === strrev($str);
 }
 
-echo isPalindrome("abbac");
+echo isPalindrome('abbac');
 echo "<br>";
 //Створіть функцію, яка повертає масив, який складається з парних чисел від 1 до 50.
 function getOddArray(): array
@@ -88,9 +88,9 @@ function findMinMax(array $numbers): array
 }
 
 $result = findMinMax([3, 5, 1, 9, 2, 8]);
-echo "Min: " . $result['min'];
+echo 'Min: ' . $result['min'];
 echo "<br>";
-echo "Max: " . $result['max'];
+echo 'Max: ' . $result['max'];
 echo "<br>";
 //Створіть функцію, яка приймає асоціативний масив і повертає новий масив зі значеннями, відсортованими за алфавітом за ключами.
 function sortArrayByKeys(array $data): array
@@ -164,12 +164,12 @@ function capitalizeWords(string $str): string
     return implode(" ", $words);
 }
 
-echo capitalizeWords("hello world  test");
+echo capitalizeWords('hello world  test');
 echo "<br>";
 //Напишіть функцію для генерації випадкового пароля заданої довжини.
 function generateRandomPassword(int $length): string
 {
-    define("characters", 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_=+[]{}|;:,.<>/?');
+    define('characters', 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_=+[]{}|;:,.<>/?');
     $password = '';
     for ($i = 0; $i < $length; $i++) {
         $password .= characters[rand(0, strlen(characters) - 1)];
