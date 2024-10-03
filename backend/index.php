@@ -1,5 +1,5 @@
 <?php
-require ("./scripts/second-hw/main.php")
+require ("./scripts/third-hw/main.php")
 ?>
 <!doctype html>
 <html lang="en">
@@ -31,6 +31,40 @@ require ("./scripts/second-hw/main.php")
 
 </head>
 <body>
+<form method="post">
+    <label for="year">Введіть рік (4 цифри):</label>
+    <input type="number" id="year" name="year" required min="1000" max="9999">
+    <input type="submit" value="Перевірити">
+</form>
+<form method="post">
+    <label for="date">Введіть дату (формат: DD.MM.YYYY):</label>
+    <input type="text" id="date" name="date" required pattern="\d{2}\.\d{2}\.\d{4}"><br><br>
 
+    <input type="submit" value="Дізнатись день тижня">
+</form>
+<form method="post">
+    <label for="date">Введіть дату (формат: YYYY-MM-DD):</label>
+    <input type="text" id="date" name="date" required pattern="\d{4}-\d{2}-\d{2}"><br><br>
+
+    <input type="submit" value="Дізнатись місяць">
+</form>
+<form method="post">
+    <label for="firstDate">Введіть дату 1(формат: YYYY-MM-DD):</label>
+    <input type="text" id="firstDate" name="firstDate" required pattern="\d{4}-\d{2}-\d{2}"><br><br>
+    <label for="secondDate">Введіть дату 2(формат: YYYY-MM-DD):</label>
+    <input type="text" id="secondDate" name="secondDate" required pattern="\d{4}-\d{2}-\d{2}"><br><br>
+
+    <input type="submit" value="Дізнатись місяць">
+</form>
+<form method="post">
+    <label for="datetime">Введіть дату-час у форматі 2025-12-31T12:13:59:</label>
+    <input type="datetime-local" id="datetime" name="datetime" required>
+    <input type="submit" value="Перетворити">
+</form>
+<form method="post">
+    <label for="year">Введіть рік:</label>
+    <input type="number" id="year" name="year" required>
+    <input type="submit" value="Знайти п'ятниці 13-те">
+</form>
 </body>
 </html>
