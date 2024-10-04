@@ -56,9 +56,9 @@ $timestampDec31 = mktime(0, 0, 0, 12, 31, $currentYear);
 echo $timestampDec31;
 echo '</br>';
 //Знайдіть кількість секунд, що пройшли з 13:12:59 15 березня 2000 року до теперішнього часу
-$timestampMarch2000 = mktime(13, 12, 59, 3, 15, 2000);
-$secondsMarch2000 = $currentTimestamp - $timestampMarch2000;
-echo $secondsMarch2000;
+$timestampMarch = mktime(13, 12, 59, 3, 15, 2000);
+$secondsMarch = $currentTimestamp - $timestampMarch;
+echo $secondsMarch;
 echo '</br>';
 //Знайдіть кількість годин, що пройшли з 7:23:48 поточного дня до цього часу
 $timestamp = mktime(7, 23, 48, date('m'), date('d'), $currentYear);
