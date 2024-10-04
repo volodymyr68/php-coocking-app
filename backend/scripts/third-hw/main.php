@@ -279,4 +279,17 @@ $date = date_create();
 date_modify($date, '-100 days');
 echo date_format($date, 'l');
 echo '<br/>';
+
+//Напишіть функцію, яка приймає назву файлу або папки і перевіряє, чи є передане значення файлом або папкою (повернути рядок)
+function checkFileOrDirectory($path) {
+    if (is_file($path)) {
+        return "file";
+    } elseif (is_dir($path)) {
+        return "directory";
+    } else {
+        return "not file and not directory";
+    }
+}
+echo checkFileOrDirectory('./scripts/third-hw/TestDir');
+
 ?>
