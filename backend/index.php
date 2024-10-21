@@ -1,70 +1,48 @@
 <?php
-require ("./scripts/third-hw/main.php")
+// src/public/index.php
+use Palmo\remember\RememberMeService;
+
+require __DIR__ . "/vendor/autoload.php";
+session_start();
+if(isset($_COOKIE['rememberMe']) && !isset($_SESSION['userId'])){
+    $rememberMeService = new RememberMeService();
+    if($rememberMeService->validateToken($_COOKIE['rememberMe'])){
+        $_SESSION['userId'] = $rememberMeService->getUserIdByToken($_COOKIE['rememberMe']);
+    }
+}
 ?>
 <!doctype html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Backend</title>
+    <title>Login</title>
     <base href="/">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/x-icon" href="./favicon.ico">
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/checkout/">
-    <!-- Bootstrap core CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-
-    <style>
-        .bd-placeholder-img {
-            font-size: 1.125rem;
-            text-anchor: middle;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            user-select: none;
-        }
-
-        @media (min-width: 768px) {
-            .bd-placeholder-img-lg {
-                font-size: 3.5rem;
-            }
-        }
-    </style>
-
 </head>
 <body>
-<!--<form method="post">-->
-<!--    <label for="year">Введіть рік (4 цифри):</label>-->
-<!--    <input type="number" id="year" name="year" required min="1000" max="9999">-->
-<!--    <input type="submit" value="Перевірити">-->
-<!--</form>-->
-<!--<form method="post">-->
-<!--    <label for="date">Введіть дату (формат: DD.MM.YYYY):</label>-->
-<!--    <input type="text" id="date" name="date" required pattern="\d{2}\.\d{2}\.\d{4}"><br><br>-->
-<!---->
-<!--    <input type="submit" value="Дізнатись день тижня">-->
-<!--</form>-->
-<!--<form method="post">-->
-<!--    <label for="date">Введіть дату (формат: YYYY-MM-DD):</label>-->
-<!--    <input type="text" id="date" name="date" required pattern="\d{4}-\d{2}-\d{2}"><br><br>-->
-<!---->
-<!--    <input type="submit" value="Дізнатись місяць">-->
-<!--</form>-->
-<!--<form method="post">-->
-<!--    <label for="firstDate">Введіть дату 1(формат: YYYY-MM-DD):</label>-->
-<!--    <input type="text" id="firstDate" name="firstDate" required pattern="\d{4}-\d{2}-\d{2}"><br><br>-->
-<!--    <label for="secondDate">Введіть дату 2(формат: YYYY-MM-DD):</label>-->
-<!--    <input type="text" id="secondDate" name="secondDate" required pattern="\d{4}-\d{2}-\d{2}"><br><br>-->
-<!---->
-<!--    <input type="submit" value="Дізнатись місяць">-->
-<!--</form>-->
-<!--<form method="post">-->
-<!--    <label for="datetime">Введіть дату-час у форматі 2025-12-31T12:13:59:</label>-->
-<!--    <input type="datetime-local" id="datetime" name="datetime" required>-->
-<!--    <input type="submit" value="Перетворити">-->
-<!--</form>-->
-<!--<form method="post">-->
-<!--    <label for="year">Введіть рік:</label>-->
-<!--    <input type="number" id="year" name="year" required>-->
-<!--    <input type="submit" value="Знайти п'ятниці 13-те">-->
-<!--</form>-->
+
+<nav>
+    <ul>
+
+        <?php
+        if (isset($_SESSION['userId'])) {
+            echo '<li><a href="./views/logout.php">Logout</a></li>';
+            echo '<li><a href="./views/profile.php">Profile</a></li>';
+            echo '<li><a href="./views/PreferencesController.php">Preferences</a></li>';
+            echo '<li><a href="views/mydishes.php">My dishes</a></li>';
+        } else {
+            echo '<li><a href="./views/login.php">Login</a></li>';
+            echo '<li><a href="./views/sign-up.php">Sign-up</a></li>';
+        }
+        echo '<li><a href="./views/faker.php">Faker</a></li>';
+        ?>
+    </ul>
+</nav>
+
+<div class="container">
+
+</div>
+
 </body>
 </html>
