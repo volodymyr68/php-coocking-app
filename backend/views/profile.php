@@ -35,11 +35,12 @@ $selectedAreas = $dishRepository->getSelectedAreas($userID);
     <nav>
         <ul>
             <li><a href="../index.php">Home</a></li>
-            <li><a href="../views/preferences.php">Preferences</a></li>
+            <li><a href="../views/profile.php">Profile</a></li>
             <li><a href="../views/mydishes.php">My dishes</a></li>
             <li><a href="../views/random.php">Random dishes</a></li>
+            <li><a href="../views/preferences.php">Preferences</a></li>
             <li><a href="../views/forum.php">Forum</a></li>
-            <li><a href="./logout.php">Logout</a></li>
+            <li><a href="../views/logout.php">Logout</a></li>
         </ul>
     </nav>
 </header>
@@ -47,7 +48,7 @@ $selectedAreas = $dishRepository->getSelectedAreas($userID);
     <?php
     echo '<h1>Hello ' . $user->getName() . ' </h1>';
     ?>
-    <form method="post" action="../controller/PreferencesController.php">
+    <form method="post" action="../controller/run.php">
         <div>
             <?php
             echo '<label for="category">Select a category:</label>';
@@ -90,6 +91,7 @@ $selectedAreas = $dishRepository->getSelectedAreas($userID);
             }
             ?>
         </div>
+        <input type="hidden" name="profile-update" value="true">
         <input type="submit" value="Save">
     </form>
     <?php

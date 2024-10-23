@@ -28,10 +28,12 @@ $allMessages = $forumRepository->getMessages();
     <nav>
         <ul>
             <li><a href="../index.php">Home</a></li>
-            <li><a href="../views/preferences.php">Preferences</a></li>
+            <li><a href="../views/profile.php">Profile</a></li>
             <li><a href="../views/mydishes.php">My dishes</a></li>
             <li><a href="../views/random.php">Random dishes</a></li>
-            <li><a href="./logout.php">Logout</a></li>
+            <li><a href="../views/preferences.php">Preferences</a></li>
+            <li><a href="../views/forum.php">Forum</a></li>
+            <li><a href="../views/logout.php">Logout</a></li>
         </ul>
     </nav>
 </header>
@@ -49,11 +51,14 @@ $allMessages = $forumRepository->getMessages();
     </div>
 
     <div class="write-box">
-        <form method="POST" action="../controller/ForumController.php">
+        <form method="POST" action="../controller/run.php">
             <label for="message">Write new message here</label>
             <input type="text" id="message" name="message" placeholder="Type your message...">
             <button type="submit">Send message</button>
         </form>
+        <?php if (isset($_SESSION['error'])):?>
+        <p style="color: #930e0e">Error: <?php echo $_SESSION['error']; unset($_SESSION['error']);?></p>
+        <?php endif;?>
     </div>
 </main>
 </body>

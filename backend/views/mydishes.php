@@ -36,10 +36,11 @@ $totalPages = ceil($totalDishes / $limit);
         <ul>
             <li><a href="../index.php">Home</a></li>
             <li><a href="../views/profile.php">Profile</a></li>
-            <li><a href="../views/preferences.php">Preferences</a></li>
+            <li><a href="../views/mydishes.php">My dishes</a></li>
             <li><a href="../views/random.php">Random dishes</a></li>
+            <li><a href="../views/preferences.php">Preferences</a></li>
             <li><a href="../views/forum.php">Forum</a></li>
-            <li><a href="./logout.php">Logout</a></li>
+            <li><a href="../views/logout.php">Logout</a></li>
         </ul>
     </nav>
 </header>
@@ -54,7 +55,7 @@ $totalPages = ceil($totalDishes / $limit);
                     <div class="info">Area: <?= htmlspecialchars($dish['area']) ?> |
                         Category: <?= htmlspecialchars($dish['category']) ?></div>
                     <div class="buttons">
-                        <form method="post" action="../controller/DishesController.php">
+                        <form method="post" action="../controller/run.php">
                             <input type="hidden" name="dish_id" value="<?= $dish['id'] ?>">
                             <input type="hidden" name="method" value="delete">
                             <button type="submit">Delete</button>

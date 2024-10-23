@@ -9,9 +9,10 @@ session_start();
     <base href="/">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/x-icon" href="./favicon.ico">
+    <link rel="stylesheet" href='../css/login.css'>
 </head>
 <body>
-<form method="post" action="../controller/auth.php">
+<form method="post" action="../controller/run.php">
     <?php
     echo '<label for="email">Enter email</label>';
     if (isset($_SESSION['email'])) {
