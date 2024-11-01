@@ -20,6 +20,7 @@ $offset = ($currentPage - 1) * $limit;
 
 $dishRepository = new DishRepository();
 
+
 if (!isset($_SESSION['specificSearch'])) {
     $dishes = $dishRepository->getFilteredDishes($_SESSION['userId'], $offset, $limit);
     $totalDishes = $dishRepository->getDishesCount($_SESSION['userId']);
