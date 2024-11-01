@@ -1,6 +1,7 @@
 <?php
 
 use Palmo\db\Db;
+use Palmo\repository\UserRepository;
 
 require_once '../vendor/autoload.php';
 
@@ -78,6 +79,17 @@ if (!empty($_POST['preferences'])) {
         $dish_id = $faker->numberBetween(1, 1000);
         $dbh->query("insert into UserPreferences (user_id,dish_id)
         VALUES ({$user_id}, {$dish_id})");
+    }
+}
+
+if(!empty($_POST['user_amount'])){
+    $userAmount = $_POST['user_amount'];
+    $userRepository = new UserRepository();
+    for($i = 0; $i < $userAmount; $i++){
+        $name = $faker->name;
+        $email = $faker->email;
+        $password = password_hash('12345', PASSWORD_DEFAULT);
+        $userRepository->save($name, $email, $password);
     }
 }
 

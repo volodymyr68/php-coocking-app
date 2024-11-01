@@ -54,6 +54,7 @@ $allMessages = $forumRepository->getMessages();
         <form method="POST" action="../controller/run.php">
             <label for="message">Write new message here</label>
             <input type="text" id="message" name="message" placeholder="Type your message...">
+            <input type="hidden" name="CSRFToken" value="<?php echo $_SESSION['CSRFToken'] ?>">
             <button type="submit">Send message</button>
         </form>
         <?php if (isset($_SESSION['error'])):?>

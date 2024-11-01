@@ -18,6 +18,8 @@ class DishController
         if (isset($_POST['method']) && $_POST['method'] === 'delete') {
             $this->service->delete();
         }
-
+        if (isset($_POST['method']) && $_POST['method'] === 'searchByName') {
+            $this->service->searchByName();
+        }
     }
 }

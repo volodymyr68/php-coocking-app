@@ -6,7 +6,6 @@ session_start();
 <head>
     <meta charset="utf-8">
     <title>Sign Up</title>
-    <base href="/">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/x-icon" href="./favicon.ico">
     <link rel="stylesheet" href='../css/signup.css'>
@@ -38,6 +37,7 @@ session_start();
         unset($_SESSION['errors']);
     }
     ?>
+    <input type="hidden" name="CSRFToken" value="<?php echo $_SESSION['CSRFToken'] ?>">
     <input type="submit" value="Login">
 </form>
 </body>

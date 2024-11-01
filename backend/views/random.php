@@ -56,6 +56,7 @@ $dishes = $dishRepository->getRandomDishes();
                         <form method="post" action="../controller/run.php">
                             <input type="hidden" name="dish_id" value="<?= $dish['id'] ?>">
                             <input type="hidden" name="method" value="save-random">
+                            <input type="hidden" name="CSRFToken" value="<?php echo $_SESSION['CSRFToken'] ?>">
                             <button type="submit">Save</button>
                         </form>
                     </div>

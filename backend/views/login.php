@@ -6,7 +6,6 @@ session_start();
 <head>
     <meta charset="utf-8">
     <title>Login</title>
-    <base href="/">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/x-icon" href="./favicon.ico">
     <link rel="stylesheet" href='../css/login.css'>
@@ -34,6 +33,7 @@ session_start();
     <label for="rememberMe">Remember me</label>
     <input type="checkbox" id="rememberMe" name="rememberMe" >
     <input type="hidden" name="login" value="true">
+    <input type="hidden" name="CSRFToken" value="<?php echo $_SESSION['CSRFToken'] ?>">
     <input type="submit" value="Login">
 </form>
 

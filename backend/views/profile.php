@@ -24,8 +24,7 @@ $selectedAreas = $dishRepository->getSelectedAreas($userID);
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Login</title>
-    <base href="/">
+    <title>Profile</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/x-icon" href="./favicon.ico">
     <link rel="stylesheet" href='../css/profile.css'>
@@ -92,12 +91,17 @@ $selectedAreas = $dishRepository->getSelectedAreas($userID);
             ?>
         </div>
         <input type="hidden" name="profile-update" value="true">
+        <input type="hidden" name="CSRFToken" value="<?php echo $_SESSION['CSRFToken'] ?>">
         <input type="submit" value="Save">
     </form>
     <?php
     if (isset($_SESSION['success'])) {
         echo '<p style="color: green;">' . $_SESSION['success'] . '</p>';
         unset($_SESSION['success']);
+    }
+    if(isset($_SESSION['error'])){
+        echo '<p style="color: red;">'. $_SESSION['error']. '</p>';
+        unset($_SESSION['error']);
     }
     ?>
 </main>

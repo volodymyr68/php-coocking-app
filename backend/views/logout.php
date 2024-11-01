@@ -3,7 +3,6 @@
 <head>
     <meta charset="utf-8">
     <title>Login</title>
-    <base href="/">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/x-icon" href="./favicon.ico">
     <link rel="stylesheet" href='../css/logout.css'>
@@ -23,10 +22,11 @@
     </nav>
 </header>
 <div class="container">
-    <h2>Выход из системы</h2>
-    <p>Вы уверены, что хотите выйти?</p>
+    <h2>Logout</h2>
+    <p>Are you sure you want to go out?</p>
     <form method="POST" action="../controller/run.php">
         <input type="hidden" name="logout" value="true">
+        <input type="hidden" name="CSRFToken" value="<?php echo $_SESSION['CSRFToken'] ?>">
         <input type="submit" value="Logout">
     </form>
 </div>

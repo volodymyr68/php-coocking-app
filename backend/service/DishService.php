@@ -46,4 +46,14 @@ class DishService
         }
     }
 
+    public function searchByName(): array{
+        if(isset($_POST['name'])){
+            $_SESSION['specificSearch'] = 'true';
+            $_SESSION['dishName'] = $_POST['name'];
+            header("Location:../views/preferences.php");
+            exit();
+        }
+        return [];
+    }
+
 }

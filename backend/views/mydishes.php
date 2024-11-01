@@ -58,6 +58,7 @@ $totalPages = ceil($totalDishes / $limit);
                         <form method="post" action="../controller/run.php">
                             <input type="hidden" name="dish_id" value="<?= $dish['id'] ?>">
                             <input type="hidden" name="method" value="delete">
+                            <input type="hidden" name="CSRFToken" value="<?php echo $_SESSION['CSRFToken'] ?>">
                             <button type="submit">Delete</button>
                         </form>
                     </div>

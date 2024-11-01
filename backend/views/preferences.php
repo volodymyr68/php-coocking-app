@@ -19,11 +19,20 @@ $offset = ($currentPage - 1) * $limit;
 
 
 $dishRepository = new DishRepository();
-$totalDishes = $dishRepository->getDishesCount($_SESSION['userId']);
-if ($totalDishes > 0) {
+
+if (!isset($_SESSION['specificSearch'])) {
     $dishes = $dishRepository->getFilteredDishes($_SESSION['userId'], $offset, $limit);
+    $totalDishes = $dishRepository->getDishesCount($_SESSION['userId']);
     $totalPages = ceil($totalDishes / $limit);
+}else{
+    $dishes = $dishRepository->searchByName($_SESSION['dishName'],$_SESSION['userId'], $offset, $limit);
+//    $dishes = $dishRepository->getFilteredDishes($_SESSION['userId'], $offset, $limit);
+//    searchByNameCount
+    $totalDishes = $dishRepository->searchByNameCount($_SESSION['userId'],$_SESSION['dishName']);
+    $totalPages = ceil($totalDishes / $limit);
+
 }
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -48,6 +57,16 @@ if ($totalDishes > 0) {
     </nav>
 </header>
 <main>
+    <form method="POST" action="../controller/run.php">
+        <label for="name">Enter dish name</label>
+        <input id="name" name="name">
+        <input type="hidden" name="userID" value="<?php echo $_SESSION['userId']?>">
+        <input type="hidden" name="offset" value="<?php echo $offset?>">
+        <input type="hidden" name="limit" value="<?php echo $limit?>">
+        <input type="hidden" name="method" value="searchByName">
+        <input type="hidden" name="CSRFToken" value="<?php echo $_SESSION['CSRFToken'] ?>">
+        <button type="submit">Search</button>
+    </form>
     <div class="container">
         <?php if ($totalDishes > 0): ?>
             <?php foreach ($dishes as $dish): ?>
@@ -61,6 +80,7 @@ if ($totalDishes > 0) {
                         <form method="post" action="../controller/run.php">
                             <input type="hidden" name="dish_id" value="<?= $dish['id'] ?>">
                             <input type="hidden" name="method" value="save">
+                            <input type="hidden" name="CSRFToken" value="<?php echo $_SESSION['CSRFToken'] ?>">
                             <button type="submit">Save</button>
                         </form>
                     </div>

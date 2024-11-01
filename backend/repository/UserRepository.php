@@ -16,7 +16,7 @@ class UserRepository
     }
     public function save(string $name,string $email, string $password ): void
     {
-        $query = 'insert into User (name, email, password) VALUES (:name, :email, :password)';
+        $query = 'insert into users (name, email, password) VALUES (:name, :email, :password)';
         $stmt = $this->dbh->prepare($query);
 
         $stmt->bindParam(':name', $name, PDO::PARAM_STR);
@@ -29,7 +29,7 @@ class UserRepository
     }
     public function findByEmail(string $email): User
     {
-        $query = 'select * from User where email = :email';
+        $query = 'select * from users where email = :email';
         $stmt = $this->dbh->prepare($query);
         $stmt->bindParam(':email', $email, PDO::PARAM_STR);
         $stmt->execute();
@@ -41,7 +41,7 @@ class UserRepository
     }
     public function findById(int $id): User
     {
-        $query ='select * from User where id = :id';
+        $query ='select * from users where id = :id';
         $stmt = $this->dbh->prepare($query);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();

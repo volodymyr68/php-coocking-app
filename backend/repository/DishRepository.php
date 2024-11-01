@@ -15,7 +15,7 @@ class DishRepository
     public function getDishes(): array
     {
 
-        $query = 'SELECT * FROM Dish';
+        $query = 'SELECT * FROM dishes';
         $stmt = $this->dbh->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll();
@@ -23,7 +23,7 @@ class DishRepository
 
     public function getAreas(): array
     {
-        $query = 'SELECT DISTINCT(area) FROM Dish';
+        $query = 'SELECT DISTINCT(area) FROM dishes';
         $stmt = $this->dbh->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll();
@@ -31,7 +31,7 @@ class DishRepository
 
     public function getCategories(): array
     {
-        $query = 'SELECT DISTINCT(category) FROM Dish';
+        $query = 'SELECT DISTINCT(category) FROM dishes';
         $stmt = $this->dbh->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll();
@@ -96,7 +96,7 @@ class DishRepository
         }
         $placeholdersCategories = implode(',', array_fill(0, count($categoriesArray), '?'));
         $placeholdersAreas = implode(',', array_fill(0, count($areasArray), '?'));
-        $query = "SELECT * FROM Dish WHERE category IN ($placeholdersCategories) AND area IN ($placeholdersAreas) LIMIT ?, ?";
+        $query = "SELECT * FROM dishes WHERE category IN ($placeholdersCategories) AND area IN ($placeholdersAreas) LIMIT ?, ?";
         $stmt = $this->dbh->prepare($query);
         $params = array_merge($categoriesArray, $areasArray);
         $params[] = $offset;
@@ -115,7 +115,7 @@ class DishRepository
         $areasArray = explode(',', $areas[0]['areas']);
         $placeholdersCategories = implode(',', array_fill(0, count($categoriesArray), '?'));
         $placeholdersAreas = implode(',', array_fill(0, count($areasArray), '?'));
-        $query = "SELECT COUNT(*) FROM Dish WHERE category IN ($placeholdersCategories) AND area IN ($placeholdersAreas)";
+        $query = "SELECT COUNT(*) FROM dishes WHERE category IN ($placeholdersCategories) AND area IN ($placeholdersAreas)";
         $stmt = $this->dbh->prepare($query);
         $params = array_merge($categoriesArray, $areasArray);
         $stmt->execute($params);
@@ -123,7 +123,7 @@ class DishRepository
     }
 
     public function saveDish(int $userID,int $dishID): void{
-        $query = 'INSERT INTO User_dishes (user_id,dish_id) VALUES (:user_id, :dish_id)';
+        $query = 'INSERT INTO user_dishes (user_id,dish_id) VALUES (:user_id, :dish_id)';
         $stmt = $this->dbh->prepare($query);
         $stmt->bindParam(':user_id',$userID);
         $stmt->bindParam(':dish_id',$dishID);
@@ -132,7 +132,7 @@ class DishRepository
 
     public function checkUserDish(int $userID, int $dishID): bool
     {
-        $query = 'SELECT COUNT(*) FROM User_dishes WHERE user_id = :user_id AND dish_id = :dish_id';
+        $query = 'SELECT COUNT(*) FROM user_dishes WHERE user_id = :user_id AND dish_id = :dish_id';
         $stmt = $this->dbh->prepare($query);
         $stmt->bindParam(':user_id',$userID);
         $stmt->bindParam(':dish_id',$dishID);
@@ -146,7 +146,7 @@ class DishRepository
 
     public function getUserDishes(int $userID, int $offset, int $limit): array
     {
-        $query = 'SELECT Dish.* FROM Dish JOIN User_dishes ON Dish.id = User_dishes.dish_id WHERE User_dishes.user_id = :user_id LIMIT :offset, :limit';
+        $query = 'SELECT dishes.* FROM dishes JOIN user_dishes ON dishes.id = user_dishes.dish_id WHERE user_dishes.user_id = :user_id LIMIT :offset, :limit';
         $stmt = $this->dbh->prepare($query);
 
         $stmt->bindParam(':user_id', $userID, PDO::PARAM_INT);
@@ -160,7 +160,7 @@ class DishRepository
 
     public function getUserDishesCount(int $userID): int
     {
-        $query = 'SELECT COUNT(*) FROM Dish JOIN User_dishes ON Dish.id = User_dishes.dish_id WHERE User_dishes.user_id = :user_id';
+        $query = 'SELECT COUNT(*) FROM dishes JOIN user_dishes ON dishes.id = user_dishes.dish_id WHERE user_dishes.user_id = :user_id';
         $stmt = $this->dbh->prepare($query);
         $stmt->bindParam(':user_id', $userID, PDO::PARAM_INT);
         $stmt->execute();
@@ -168,7 +168,7 @@ class DishRepository
     }
 
     public function deleteDish(int $userID,int $dishID): void{
-        $query = 'DELETE FROM User_dishes WHERE user_id = :user_id AND dish_id = :dish_id';
+        $query = 'DELETE FROM user_dishes WHERE user_id = :user_id AND dish_id = :dish_id';
         $stmt = $this->dbh->prepare($query);
         $stmt->bindParam(':user_id',$userID);
         $stmt->bindParam(':dish_id',$dishID);
@@ -176,10 +176,70 @@ class DishRepository
     }
 
     public function getRandomDishes(): array{
-        $query = 'SELECT * FROM Dish ORDER BY RAND() LIMIT 6';
+        $query = 'SELECT * FROM dishes ORDER BY RAND() LIMIT 6';
         $stmt = $this->dbh->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function searchByName(string $name, int $userId, int $offset, int $limit): array {
+        $categories = $this->getSelectedCategories($userId);
+        $areas = $this->getSelectedAreas($userId);
+
+        $categoriesArray = explode(',', $categories[0]['categories']);
+        $areasArray = explode(',', $areas[0]['areas']);
+
+        if (empty($categoriesArray) || empty($areasArray)) {
+            return [];
+        }
+
+        $placeholdersCategories = implode(',', array_fill(0, count($categoriesArray), '?'));
+        $placeholdersAreas = implode(',', array_fill(0, count($areasArray), '?'));
+
+        $query = "SELECT * FROM dishes 
+              WHERE category IN ($placeholdersCategories) 
+              AND area IN ($placeholdersAreas) 
+              AND name LIKE ? 
+              LIMIT ?, ?";
+
+        $stmt = $this->dbh->prepare($query);
+
+        $params = array_merge($categoriesArray, $areasArray);
+        $params[] = '%' . $name . '%';
+        $params[] = $offset;
+        $params[] = $limit;
+
+        $stmt->execute($params);
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    public function searchByNameCount(int $userId, string $name): int {
+        $categories = $this->getSelectedCategories($userId);
+        $areas = $this->getSelectedAreas($userId);
+
+        if (empty($categories[0]['categories']) || empty($areas[0]['areas'])) {
+            return 0;
+        }
+
+        $categoriesArray = explode(',', $categories[0]['categories']);
+        $areasArray = explode(',', $areas[0]['areas']);
+
+        $placeholdersCategories = implode(',', array_fill(0, count($categoriesArray), '?'));
+        $placeholdersAreas = implode(',', array_fill(0, count($areasArray), '?'));
+
+        $query = "SELECT COUNT(*) FROM dishes 
+              WHERE category IN ($placeholdersCategories) 
+              AND area IN ($placeholdersAreas) 
+              AND name LIKE ?";
+
+        $stmt = $this->dbh->prepare($query);
+
+        $params = array_merge($categoriesArray, $areasArray);
+        $params[] = '%' . $name . '%';
+
+        $stmt->execute($params);
+
+        return $stmt->fetchColumn();
     }
 }
 
